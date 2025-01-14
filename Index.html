@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Lojas Parceiras Livelo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        #search-bar {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Busca de Lojas Parceiras Livelo</h1>
+    <input type="text" id="search-bar" placeholder="Digite o nome da loja...">
+    <ul id="store-list">
+        <!-- Lista de lojas será inserida aqui -->
+    </ul>
+
+    <script>
+        // Lista de lojas parceiras
+        const stores = [
+            "ABC da Construcao",
+            "ADCOS",
+            "AMOBELEZA",
+            "Abelha Rainha",
+            "Aguativa Resort",
+            "Aliexpress",
+            "Allianz",
+            "Allugator",
+            "Amazon",
+            "Angeloni",
+            "Apoio Entregas",
+            "Aramis",
+            "Asics",
+            "Assist Card Seguros",
+            "Atalaia Noronha",
+            "Avon",
+            "Azul Viagens",
+            "Bagaggio",
+            "Baianao",
+            "Basicamente",
+            "Basico.com",
+            "BeOn",
+            "Beach Park Hospedagens",
+            "Beach Park Ingressos",
+            "Beep",
+            "Beleza na Web PRO",
+            "Beleza na web",
+            "Beto Carrero World",
+            "Beyoung",
+            "Bibi",
+            "BoBo",
+            "Bobstore",
+            "Bombay Herbs & Spices",
+            "Bonjour Lingerie",
+            "Booking.com",
+            "Bradesco Capitalizacao",
+            "Buddha Spa",
+            "Budget",
+            "Bulbe Energia",
+            "Buser",
+            "Buzios Beach Resort",
+            "CARE Natural Beauty",
+            "CEA",
+            "Cabana Magazine",
+            "Cadence",
+            "Cafe Orfeu",
+            "Cafe Utam",
+            "Caffeine Army",
+            "Cambio Online",
+            "Camicado",
+            "Carrefour Mercado",
+            "Carrefour Shopping",
+            "Casa MinD",
+            "Casas Bahia",
+            "Centauro",
+            "Cervejabox",
+            "Cestas Michelli",
+            "Chico Rei",
+            "Ciclic Seguro Celular",
+            "Ciclic Seguro Viagem",
+            "Claro",
+            "ClickBus",
+            "Coffee Mais",
+            "Colcci",
+            "Coliseu",
+            "Consorcio Magalu",
+            "Creditas",
+            "Crocs",
+            "Cruzeiros Agaxtur",
+            "D'Or Mais Saude",
+            "DPaschoal",
+            "Dafiti",
+            "Dako",
+            "Darkness",
+            "Decathlon",
+            "Decolar",
+            "Democrata",
+            "Divvino",
+            "Dr Jones",
+            "Drogaria Sao Paulo",
+            "Drogarias Pacheco",
+            "Dudalina",
+            "Dzarm",
+            "EDP",
+            "Easy Live",
+            "Ellus",
+            "Epoca cosmesticos",
+            "Estoque",
+            "Eudora",
+            "Euro",
+            "Extra",
+            "Faber-Castell",
+            "Farmacias App",
+            "Fast Shop",
+            "Fila",
+            "Flormel",
+            "Foco",
+            "Forever Liss",
+            "Fossil",
+            "Frigelar",
+            "Gazin",
+            "Giuliana Flores",
+            "Go case",
+            "Granado",
+            "Grupo Dreams",
+            "Guanabara",
+            "Guess",
+            "Guldi",
+            "HERO SEGUROS",
+            "Havaianas",
+            "Hering",
+            "Hering Outlet",
+            "Hertz Internacional",
+            "Highstil",
+            "Home Angels",
+            "Hope",
+            "Hope Resort",
+            "Hopper Nutrition",
+            "Horas Magicas",
+            "Hot Beach",
+            "Hoteis Deville",
+            "Hoteis Windsor",
+            "Hoteis de Luxo Brasil",
+            "Hoteis.com",
+            "Hotel Gran Marquise",
+            "Hotel Nacional",
+            "Imaginarium",
+            "Imperio",
+            "Individual",
+            "Infinix",
+            "Insider Store",
+            "IntegralMedica",
+            "JBL",
+            "John John",
+            "Julio Okubo",
+            "Kaligo",
+            "Key Design",
+            "Klabin ForYou",
+            "LE LIS",
+            "LEGO",
+            "LIVE!",
+            "Lacoste",
+            "Liga Vitoria - Seguro de Viagem",
+            "Liga Vitoria Consorcio",
+            "Liga Vitoria Seguro Auto",
+            "Liga Vitoria Seguro Moto",
+            "Liga Vitoria Seguro Residencial",
+            "Liga Vitoria Seguro de Vida",
+            "Liz",
+            "Localiza",
+            "Localiza Meoo",
+            "Loccitane",
+            "Loccitane au Bresil",
+            "Lolita",
+            "Lord Perfumaria",
+            "Loungerie",
+            "Luck Receptivo (Joao Pessoa)",
+            "Luck Receptivo (Salvador)",
+            "Luck Receptivo - Recife",
+            "Luck Receptivo Maceio",
+            "Luck Receptivo Natal",
+            "Luxury Loyalty",
+            "MAPFRE Seguro Auto",
+            "Madesa",
+            "Magalu",
+            "Malwee",
+            "Max Titanium",
+            "MaxRacer",
+            "MedSenior",
+            "Meia Sola",
+            "MeuCopo",
+            "Mevo Farma",
+            "Midea",
+            "Minimal Club",
+            "Mistral",
+            "Mizuno",
+            "Mobills",
+            "Mobly",
+            "Mondaine",
+            "Monica Sanches",
+            "Monis",
+            "Monis Pro",
+            "Monte Carlo",
+            "Morana",
+            "Movida",
+            "Mycon Consorcio Digital",
+            "Nars",
+            "Natura",
+            "Netshoes",
+            "New Balance",
+            "Next Seguro Viagem",
+            "Nike",
+            "Nova Era",
+            "Novo",
+            "Nutty Bavarian",
+            "O Boticario",
+            "O.U.i Paris",
+            "Oceane",
+            "Oficina Reserva",
+            "Olympikus",
+            "Ondas Praia Resort",
+            "Osklen",
+            "Oster",
+            "Otica Contato",
+            "Oxford",
+            "Pado",
+            "Panvel",
+            "Pede Pronto",
+            "Penalty",
+            "PerfectDraft (Ambev)",
+            "Pet Paluche",
+            "Petlove",
+            "Petlove Saude",
+            "Piatan Natural",
+            "Pipooh",
+            "Ponto",
+            "Ponto Livelo",
+            "Pontofrio",
+            "Pontos",
+            "Pontos Livelo",
+            "Portal das Malas",
+            "Portallar",
+            "Porto Faz",
+            "Posthaus",
+            "Prive Hoteis e Parques",
+            "Probiotica",
+            "Puket",
+            "Qcompra",
+            "Quem Disse, Berenice?",
+            "Quero Passagem",
+            "Quero-Quero",
+            "Quintess",
+            "R$",
+            "RDC Viagens",
+            "Re Petit",
+            "Renner",
+            "Rentalcars",
+            "Rentcars",
+            "Reserva",
+            "Reservecar",
+            "Riachuelo",
+            "Richards",
+            "Saint Paul",
+            "Salinas",
+            "Sam's Club",
+            "Sam's Club - E-commerce",
+            "Samsonite",
+            "Sebastian Coffee",
+            "Seculus",
+            "Seguro Residencial MAPFRE",
+            "Seguro Viagem Bradesco",
+            "Sephora",
+            "Seus Ingressos",
+            "Shiseido",
+            "Shoestock",
+            "Shopee",
+            "Simple Organic",
+            "Sixt",
+            "Sottile",
+            "Speedo",
+            "Spicy",
+            "Studio Z",
+            "Summerville",
+            "Supernosso",
+            "TIM",
+            "Tailors Mind",
+            "Technos",
+            "The body shop",
+            "Thule",
+            "Tia Sonia",
+            "Tokio Marine Seguros",
+            "Top Moveis",
+            "Travelex",
+            "TripChip",
+            "Trocafy",
+            "U$",
+            "Umbro",
+            "Under Armour",
+            "Unidas",
+            "Universal Assistance Seguros",
+            "Utilplast",
+            "VR Collezioni",
+            "Viacao Garcia",
+            "Viajar",
+            "Vivara",
+            "Vult",
+            "Wet n Wild",
+            "Wise UP",
+            "Yvy",
+            "Zattini",
+            "Zissou",
+            "avis",
+            "ropo"
+        ];
+
+        // Seleciona a lista e o campo de pesquisa
+        const storeList = document.getElementById('store-list');
+        const searchBar = document.getElementById('search-bar');
+
+        // Insere as lojas na lista
+        function populateList() {
+            storeList.innerHTML = stores.map(store => `<li>${store}</li>`).join('');
+        }
+
+        // Filtra a lista com base na pesquisa
+        searchBar.addEventListener('input', () => {
+            const query = searchBar.value.toLowerCase();
+            document.querySelectorAll('#store-list li').forEach(item => {
+                item.classList.toggle('hidden', !item.textContent.toLowerCase().includes(query));
+            });
+        });
+
+        // Inicializa a lista
+        populateList();
+    </script>
+</body>
+
+</html>
